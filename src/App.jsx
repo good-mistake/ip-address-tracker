@@ -35,19 +35,25 @@ const App = () => {
             <ul>
               <li>
                 <span>IP ADDRESS</span>
-                {location?.query}
+                {location?.ip ? location?.ip : "No Ip Found"}
               </li>
               <li>
                 <span>Location</span>
-                {location?.city}
+                {location?.city
+                  ? location?.city
+                  : "No Location Found!" || location?.country
+                  ? location?.country
+                  : "No Location Found!"}
               </li>
               <li>
                 <span>Timezone</span>
-                {location?.timezone}
+                {location?.timezone
+                  ? location?.timezone
+                  : "NO Time Zone Found!"}
               </li>
               <li>
                 <span>Isp</span>
-                {location?.isp}
+                {location?.isp ? location?.isp : "No Isp Found!"}
               </li>
             </ul>
           ) : (

@@ -15,16 +15,19 @@ const Search = ({
       try {
         const userIp = (await axios.get("https://api.ipify.org?format=json"))
           .data.ip;
-        const res = await axios.get(`https://ip-api.com/json/${userIp}`);
-        if (res.data.status === "success") {
+        const res = await axios.get(
+          `https://api.ipgeolocation.io/ipgeo?apiKey=5196ccfcd3ae4792903fec48b385b890&ip=${userIp}`
+        );
+        if (res.status === 200) {
+          const data = res.data;
           setLocation({
-            lat: res.data.lat,
-            lon: res.data.lon,
-            city: res.data.city,
-            country: res.data.country,
-            isp: res.data.isp,
-            timezone: res.data.timezone,
-            query: res.data.query,
+            lat: data.latitude,
+            lon: data.longitude,
+            city: data.city,
+            country: data.country_name,
+            isp: data.isp,
+            timezone: data.time_zone.name,
+            ip: data.ip,
           });
         } else {
           setError("Location not found!!!");
@@ -38,29 +41,48 @@ const Search = ({
 
     fetchInitialLocation();
   }, [setLocation, setError, setLoading]);
+  const resolveDomainToIp = async (domain) => {
+    try {
+      const res = await axios.get(
+        `https://dns.google/resolve?name=${domain}&type=A`
+      );
+      const ip = res.data.Answer[0].data;
+      return ip;
+    } catch (error) {
+      setError("Failed to resolve domain to IP.");
+      return null;
+    }
+  };
   const handleSearch = async () => {
     setLoading(true);
     setError("");
     try {
-      const searchIp =
-        userInput ||
-        (await axios.get("https://api.ipify.org?format=json")).data.ip;
+      let searchIp = userInput;
+      if (!searchIp.match(/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/)) {
+        searchIp = await resolveDomainToIp(userInput);
+      }
 
-      const res = await axios.get(`https://ip-api.com/json/${searchIp}`);
-      if (res.data.status === "success") {
-        console.log(res);
-
-        setLocation({
-          lat: res.data.lat,
-          lon: res.data.lon,
-          city: res.data.city,
-          country: res.data.country,
-          isp: res.data.isp,
-          timezone: res.data.timezone,
-          query: res.data.query,
-        });
+      if (searchIp) {
+        const res = await axios.get(
+          `https://api.ipgeolocation.io/ipgeo?apiKey=5196ccfcd3ae4792903fec48b385b890&ip=${searchIp}`
+        );
+        if (res.status === 200) {
+          console.log(res);
+          const data = res.data;
+          setLocation({
+            lat: data.latitude,
+            lon: data.longitude,
+            city: data.city,
+            country: data.country_name,
+            isp: data.isp,
+            timezone: data.time_zone.name,
+            ip: data.ip,
+          });
+        } else {
+          setError("Location not found!!!");
+        }
       } else {
-        setError("Location not found!!!");
+        setError("Failed to resolve domain to IP.");
       }
     } catch (err) {
       setError("An error occurred please try again later.");
