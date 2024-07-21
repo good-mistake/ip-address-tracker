@@ -15,7 +15,7 @@ const Search = ({
       try {
         const userIp = (await axios.get("https://api.ipify.org?format=json"))
           .data.ip;
-        const res = await axios.get(`http://ip-api.com/json/${userIp}`);
+        const res = await axios.get(`https://ip-api.com/json/${userIp}`);
         if (res.data.status === "success") {
           setLocation({
             lat: res.data.lat,
@@ -46,7 +46,7 @@ const Search = ({
         userInput ||
         (await axios.get("https://api.ipify.org?format=json")).data.ip;
 
-      const res = await axios.get(`http://ip-api.com/json/${searchIp}`);
+      const res = await axios.get(`https://ip-api.com/json/${searchIp}`);
       if (res.data.status === "success") {
         console.log(res);
 
