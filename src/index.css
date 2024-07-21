@@ -1,0 +1,229 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
+body {
+  margin: 0;
+  font-family: "Rubik", sans-serif;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.container header {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem 0 6rem 0rem;
+  background-image: url("./images/pattern-bg-desktop.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  position: fixed;
+  z-index: 1000;
+}
+h1 {
+  font-weight: 400;
+  font-size: 1.75rem;
+}
+.container header input {
+  width: 30rem;
+  padding: 1rem;
+  border-radius: 15px 0px 0 15px;
+  border-color: unset;
+  color: #5c5c5c;
+  outline: none;
+}
+.container button {
+  padding: 1rem;
+  border-radius: 0 15px 15px 0;
+  border: 1px solid black;
+  background-color: #000000;
+  color: #cbcbcb;
+  font-size: 0.75rem;
+  font-weight: 900;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+.loadingBtn {
+  background-color: #000000;
+  color: #dcdcdc;
+  animation: loadingAnimation 1.5s infinite;
+}
+@keyframes loadingAnimation {
+  0% {
+    background-color: #003366;
+    color: #cce0ff;
+    border-color: #004080;
+  }
+  50% {
+    background-color: #004080;
+    color: #b3c6ff;
+    border-color: #00509e;
+  }
+  100% {
+    background-color: #00509e;
+    color: #e0eaff;
+    border-color: #007bff;
+  }
+}
+.skeleton {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+section {
+  color: black;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+ul {
+  background-color: white;
+  border-radius: 10px;
+  padding: 2rem 0;
+  position: fixed;
+  z-index: 1000;
+  list-style-type: none;
+  top: 155px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+
+li {
+  border-radius: 4px;
+  border-right: 0.5px solid #e2e2e2;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 2rem;
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+li span {
+  color: #8f8f8f;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+}
+.skeleton {
+  display: flex;
+  flex-direction: row;
+}
+.skeleton li {
+  padding: 3rem 2rem;
+  position: relative;
+  min-width: 150px;
+  box-sizing: border-box;
+  align-items: center;
+}
+.skeleton li::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(200, 200, 200, 0.2) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 1.5s infinite;
+}
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+.leaflet-control-container {
+  display: none !important;
+}
+@media (max-width: 1110px) {
+  li {
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 1rem;
+  }
+}
+@media (max-width: 768px) {
+  .container header input {
+    width: 20rem;
+  }
+  .container header {
+    background-image: url("./images/pattern-bg-mobile.png");
+    padding: 1rem 0 10rem 0rem;
+    position: relative;
+  }
+  ul {
+    width: 25rem;
+    padding: 0rem 0;
+
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    top: -155px;
+    position: absolute;
+  }
+  li {
+    border-right: unset;
+    border-bottom: 0.5px solid #c5c5c5;
+    padding: 1.25rem;
+  }
+}
+@media (max-width: 450px) {
+  .container header input {
+    width: 14rem;
+    border-radius: 10px 0px 0 10px;
+  }
+  .container header {
+    padding: 1rem 0 8rem 0rem;
+  }
+  ul {
+    width: 19rem;
+    border-radius: 10px;
+    top: -125px;
+  }
+  .container button {
+    border-radius: 0 10px 10px 0;
+  }
+  li {
+    font-size: 13px;
+    font-weight: 500;
+  }
+  li span {
+    font-size: 10px;
+    font-weight: 400;
+  }
+}
+@media (max-width: 310px) {
+  header div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .container header input,
+  .container header button {
+    border-radius: 10px;
+  }
+  .container header button {
+    margin-top: 10px;
+    width: 100%;
+  }
+}
